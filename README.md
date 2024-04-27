@@ -1,36 +1,30 @@
 <div align="center">
 
-  # example-plugin 
-  <sub>A boilerplate for creating mov-cli v4 plugins.</sub>
+  # mov-cli-ms
+  <sub>A mov-cli v4 plugin for watching content from your media server.</sub>
 
 </div>
 
-## Installation for development.
-Here's how to install and add the plugin to mov-cli for development.
+> [!NOTE]
+> Currently work in progress, Currently only Jellyfin works
 
-1. Clone the repo.
+## Installation 🛠️
+Here's how to install and add the plugin to mov-cli.
+
+1. Install it.
 ```sh
-git clone https://github.com/mov-cli/example-plugin.git
-cd example-plugin
+pip install git+https://github.com/mov-cli/mov-cli-ms
 ```
-
-2. Install in editable mode.
-```sh
-make install-editable
-```
-> **or** ``pip install -e . --config-settings editable_mode=compat``
-
-3. Add the plugin to mov-cli.
+2. Then add the plugin to your mov-cli config.
 ```sh
 mov-cli -e
 ```
 ```toml
 [mov-cli.plugins]
-namespace = "package_name" # check out the wiki for more: https://github.com/mov-cli/mov-cli/wiki/Plugins#%EF%B8%8F-how-to-install-plugins
+ms = "mov-cli-ms"
 ```
 
-4. Create away. 😊
-
-<br>
-
-> The [mov-cli-test](https://github.com/mov-cli/mov-cli-test) and [mov-cli-youtube](https://github.com/mov-cli/mov-cli-youtube) plugins are great resources for learning the ins and outs of mov-cli plugin development.
+## Usage 🖱️
+```sh
+mov-cli -s ms {query} -- --url "jellyfin url" --username "your jellyfin username" --password "your jellyfin password"
+```
