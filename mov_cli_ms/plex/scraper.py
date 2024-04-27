@@ -13,9 +13,9 @@ from mov_cli import Single, Multi, Metadata
 from mov_cli.scraper import Scraper
 from mov_cli.utils import EpisodeSelector
 
-__all__ = ("Example", )
+__all__ = ("PlexScraper", )
 
-class Example(Scraper):
+class PlexScraper(Scraper):
     def __init__(self, config: Config, http_client: HTTPClient, options: Optional[ScraperOptionsT] = None) -> None:
         self.base_url = ...
 

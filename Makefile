@@ -1,6 +1,6 @@
 .PHONY: build
 
-pip = pip
+pip = pip3.8
 python = python
 
 build:

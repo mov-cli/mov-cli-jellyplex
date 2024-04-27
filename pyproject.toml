@@ -1,8 +1,8 @@
 [project]
-name = "mov-cli-example"
+name = "mov-cli-ms"
 description = "A mov-cli v4 plugin for watching whatever you desire. 🌟"
 authors = [
-    {name = "Goldy", email = "goldy@devgoldy.xyz"} # Just an example, replace this with your name and email.
+    {name = "Ananas", email = "ananas@r3tr0ananas.pro"}
 ]
 readme = {file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.8"
@@ -38,15 +38,15 @@ dev = [
 ]
 
 [project.urls]
-GitHub = "https://github.com/mov-cli/example-plugin"
-BugTracker = "https://github.com/mov-cli/example-plugin/issues"
+GitHub = "https://github.com/mov-cli/mov-cli-ms"
+BugTracker = "https://github.com/mov-cli/mov-cli-ms/issues"
 
 [tool.setuptools.dynamic]
-version = { attr = "mov_cli_example.__version__" }
+version = { attr = "mov_cli_ms.__version__" }
 
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-include = ["mov_cli_example*"]
+include = ["mov_cli_ms*"]
