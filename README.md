@@ -6,7 +6,7 @@
 </div>
 
 > [!NOTE]
-> Currently work in progress, Currently only Jellyfin works
+> WIP, Currently only Jellyfin works
 
 ## Installation 🛠️
 Here's how to install and add the plugin to mov-cli.
