@@ -38,8 +38,8 @@ dev = [
 ]
 
 [project.urls]
-GitHub = "https://github.com/mov-cli/mov-cli-ms"
-BugTracker = "https://github.com/mov-cli/mov-cli-ms/issues"
+GitHub = "https://github.com/mov-cli/mov-cli-media-server"
+BugTracker = "https://github.com/mov-cli/mov-cli-media-server/issues"
 
 [tool.setuptools.dynamic]
 version = { attr = "mov_cli_ms.__version__" }
