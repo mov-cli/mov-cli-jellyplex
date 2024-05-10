@@ -8,27 +8,29 @@ if TYPE_CHECKING:
     from mov_cli.http_client import HTTPClient
     from mov_cli.scraper import ScraperOptionsT
 
-from mov_cli import Single, Multi, Metadata, MetadataType
+from platform import uname
 
 from mov_cli.scraper import Scraper
 from mov_cli.utils import EpisodeSelector
 from mov_cli.errors import MovCliException
-from platform import uname
+from mov_cli import Single, Multi, Metadata, MetadataType
 
 __all__ = ("JellyfinScraper", )
 
 class JellyfinScraper(Scraper):
     def __init__(self, config: Config, http_client: HTTPClient, options: Optional[ScraperOptionsT] = None) -> None:
-        self.base_url = options.get("url")
-        self.username = options.get("username")
-        self.password = options.get("password")
+        env_config = config.get_env_config()
+
+        self.base_url = env_config("JELLY_URL", default = None, cast = str)
+        self.username = env_config("JELLY_USERNAME", default = None, cast = str)
+        self.password = env_config("JELLY_PASSWORD", default = None, cast = str)
 
         self.uuid = uname().node # NOTE: To prevent of multiple device detections
 
         super().__init__(config, http_client, options)
 
         self.new_headers, self.user_id, self.api_key = self.__get_auth()
-    
+
     def __get_auth(self):
         auth_data = {
             "username": self.username,
