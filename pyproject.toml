@@ -1,6 +1,6 @@
 [project]
 name = "mov-cli-ms"
-description = "A mov-cli v4 plugin for watching whatever you desire. 🌟"
+description = "A mov-cli v4 plugin for watching content from your media server."
 authors = [
     {name = "Ananas", email = "ananas@r3tr0ananas.pro"}
 ]
