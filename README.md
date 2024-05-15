@@ -13,7 +13,7 @@ Here's how to install and add the plugin to mov-cli.
 
 1. Install it.
 ```sh
-pip install git+https://github.com/mov-cli/mov-cli-ms
+pip install mov-cli-ms
 ```
 2. Then add the plugin to your mov-cli config.
 ```sh
