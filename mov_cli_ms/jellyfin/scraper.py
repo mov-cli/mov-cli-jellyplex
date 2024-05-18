@@ -71,7 +71,7 @@ class JellyfinScraper(Scraper):
             yield Metadata(
                 id = item["Id"],
                 title = item["Name"],
-                type = MetadataType.MOVIE if item["Type"] == "Movie" else MetadataType.SERIES,
+                type = MetadataType.SINGLE if item["Type"] == "Movie" else MetadataType.MULTI,
                 year = item["PremiereDate"][:4]
             )
 
@@ -101,7 +101,7 @@ class JellyfinScraper(Scraper):
             
 
     def scrape(self, metadata: Metadata, episode: EpisodeSelector) -> Single | Multi:
-        if metadata.type == MetadataType.SERIES:
+        if metadata.type == MetadataType.MULTI:
             season_id = self.http_client.get(
                 self.base_url + f"/Shows/{metadata.id}/Seasons?isSpecialSeason=false", 
                 headers=self.new_headers, 
