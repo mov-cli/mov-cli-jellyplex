@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from mov_cli.http_client import HTTPClient
     from mov_cli.scraper import ScraperOptionsT
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from mov_cli import Single, Multi, Metadata, MetadataType
 
@@ -25,7 +25,7 @@ __all__ = ("PlexScraper", "PlexMetadata",)
 @dataclass
 class PlexMetadata(Metadata):
     id: int
-    video: Movie | Show
+    video: Movie | Show = field(default = None)
 
 class PlexScraper(Scraper):
     def __init__(self, config: Config, http_client: HTTPClient, options: Optional[ScraperOptionsT] = None) -> None:
@@ -45,7 +45,7 @@ class PlexScraper(Scraper):
 
         for _, video in enumerate(videos):
             if video.TYPE in ["movie", "show"]:
-                yield Metadata(
+                yield PlexMetadata(
                     id = _,
                     title = video.title,
                     type = MetadataType.SINGLE if "movie" == video.TYPE else MetadataType.MULTI,
@@ -74,7 +74,7 @@ class PlexScraper(Scraper):
             )
         
         return Single(
-            url = self.__make_url(metadata.id),
+            url = self.__make_url(metadata.video),
             title = metadata.title,
             year = metadata.year
         )
