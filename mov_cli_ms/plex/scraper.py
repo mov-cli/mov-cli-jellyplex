@@ -8,6 +8,8 @@ if TYPE_CHECKING:
     from mov_cli.http_client import HTTPClient
     from mov_cli.scraper import ScraperOptionsT
 
+from dataclasses import dataclass
+
 from mov_cli import Single, Multi, Metadata, MetadataType
 
 from mov_cli.scraper import Scraper
@@ -16,8 +18,14 @@ from mov_cli.utils import EpisodeSelector
 from plexapi.myplex import MyPlexAccount
 from plexapi.server import PlexServer
 from plexapi.exceptions import TwoFactorRequired
+from plexapi.video import Movie, Show
 
-__all__ = ("PlexScraper", )
+__all__ = ("PlexScraper", "PlexMetadata",)
+
+@dataclass
+class PlexMetadata(Metadata):
+    id: int
+    video: Movie | Show
 
 class PlexScraper(Scraper):
     def __init__(self, config: Config, http_client: HTTPClient, options: Optional[ScraperOptionsT] = None) -> None:
@@ -32,31 +40,32 @@ class PlexScraper(Scraper):
         super().__init__(config, http_client, options)
 
 
-    def search(self, query: str, limit: int = 20) -> Generator[Metadata, Any, None]:
+    def search(self, query: str, limit: int = 20) -> Generator[PlexMetadata, Any, None]:
         videos = self.plex.search(query, limit = limit)
 
-        for video in videos:
+        for _, video in enumerate(videos):
             if video.TYPE in ["movie", "show"]:
                 yield Metadata(
-                    id = video,
+                    id = _,
                     title = video.title,
                     type = MetadataType.SINGLE if "movie" == video.TYPE else MetadataType.MULTI,
                     year = video.year,
+                    video = video
                 )
 
-    def scrape_episodes(self, metadata: Metadata) -> Dict[int, int] | Dict[None, int]:
+    def scrape_episodes(self, metadata: PlexMetadata) -> Dict[int, int] | Dict[None, int]:
         scraped_episodes = {}
 
-        seasons = metadata.id.seasons()
+        seasons = metadata.video.seasons()
 
         for season in seasons:
             scraped_episodes[season.seasonNumber] = len(season.episodes())
 
         return scraped_episodes
 
-    def scrape(self, metadata: Metadata, episode: EpisodeSelector) -> Single | Multi:
+    def scrape(self, metadata: PlexMetadata, episode: EpisodeSelector) -> Single | Multi:
         if metadata.type == MetadataType.MULTI:
-            epi = metadata.id.episode(season = episode.season, episode = episode.episode)
+            epi = metadata.video.episode(season = episode.season, episode = episode.episode)
 
             return Multi(
                 url = self.__make_url(epi),
