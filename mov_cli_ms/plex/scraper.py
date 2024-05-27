@@ -35,7 +35,7 @@ class PlexScraper(Scraper):
         self.username = env_config("PLEX_USERNAME", default = None, cast = str)
         self.password = env_config("PLEX_PASSWORD", default = None, cast = str)
 
-        self.plex: PlexServer = self.__auth()
+        self.plex = self.__auth()
 
         super().__init__(config, http_client, options)
 
@@ -79,12 +79,12 @@ class PlexScraper(Scraper):
             year = metadata.year
         )
 
-    def __make_url(self, item):
+    def __make_url(self, item) -> str:
         key = next(item.iterParts()).key
 
         return item._server.url(f"{key}?download=1&X-Plex-Token={self.plex.account().authToken}")
 
-    def __auth(self):
+    def __auth(self) -> PlexServer:
         try:
             account = MyPlexAccount(self.username, self.password)
         except TwoFactorRequired:
