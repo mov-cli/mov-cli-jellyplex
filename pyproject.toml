@@ -2,7 +2,7 @@
 name = "mov-cli-ms"
 description = "A mov-cli v4 plugin for watching content from your media server."
 authors = [
-    {name = "Ananas", email = "ananas@r3tr0ananas.pro"}
+    {name = "Ananas", email = "ananas@ananas.moe"}
 ]
 readme = {file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.8"
