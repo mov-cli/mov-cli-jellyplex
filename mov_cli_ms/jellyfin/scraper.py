@@ -58,8 +58,13 @@ class JellyfinScraper(Scraper):
         return headers, user_id, token
 
     def search(self, query: str, limit: int = 20) -> Generator[Metadata, Any, None]:
+        uri = f"/Users/{self.user_id}/Items?recursive=true&searchTerm={query}"
+
+        if query == "all+":
+            uri = f"/Users/{self.user_id}/Items?recursive=true"
+
         items = self.http_client.get(
-            self.base_url + f"/Users/{self.user_id}/Items?recursive=true&searchTerm={query}", 
+            self.base_url + uri, 
             headers=self.new_headers, 
             include_default_headers=False
         ).json()["Items"]
