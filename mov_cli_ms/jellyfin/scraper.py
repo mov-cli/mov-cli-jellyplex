@@ -60,7 +60,7 @@ class JellyfinScraper(Scraper):
     def search(self, query: str, limit: int = 20) -> Generator[Metadata, Any, None]:
         uri = f"/Users/{self.user_id}/Items?recursive=true&searchTerm={query}"
 
-        if query == "all+":
+        if query in ["all+", "*"]:
             uri = f"/Users/{self.user_id}/Items?recursive=true"
 
         items = self.http_client.get(
