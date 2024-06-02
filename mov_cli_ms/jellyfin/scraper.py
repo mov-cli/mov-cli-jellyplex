@@ -27,9 +27,9 @@ class JellyfinScraper(Scraper):
     ) -> None:
         env_config = config.get_env_config()
 
-        self.base_url = env_config("JELLY_URL", default=None, cast=str)
-        self.username = env_config("JELLY_USERNAME", default=None, cast=str)
-        self.password = env_config("JELLY_PASSWORD", default=None, cast=str)
+        self.base_url = env_config("JELLY_URL", default = None, cast = str)
+        self.username = env_config("JELLY_USERNAME", default = None, cast = str)
+        self.password = env_config("JELLY_PASSWORD", default = None, cast = str)
 
         self.uuid = uname().node  # NOTE: To prevent of multiple device detections
 
@@ -50,7 +50,7 @@ class JellyfinScraper(Scraper):
             self.base_url + "/Users/AuthenticateByName",
             headers = headers,
             json = auth_data,
-            include_default_headers = False,
+            include_default_headers = False
         )
 
         if authbyname.is_error:
@@ -74,7 +74,9 @@ class JellyfinScraper(Scraper):
             uri = f"/Users/{self.user_id}/Items?recursive=true"
 
         items = self.http_client.get(
-            self.base_url + uri, headers=self.new_headers, include_default_headers=False
+            self.base_url + uri, 
+            headers = self.new_headers, 
+            include_default_headers = False
         ).json()["Items"][:limit]
 
         for item in items:
@@ -84,7 +86,7 @@ class JellyfinScraper(Scraper):
             yield Metadata(
                 id = item["Id"],
                 title = item["Name"],
-                type= MetadataType.SINGLE if item["Type"] == "Movie" else MetadataType.MULTI,
+                type = MetadataType.SINGLE if item["Type"] == "Movie" else MetadataType.MULTI,
                 year = item["PremiereDate"][:4]
             )
 
@@ -94,7 +96,7 @@ class JellyfinScraper(Scraper):
         items = self.http_client.get(
             self.base_url + f"/Shows/{metadata.id}/Seasons?isSpecialSeason=false",
             headers = self.new_headers,
-            include_default_headers = False,
+            include_default_headers = False
         ).json()["Items"]
 
         for i in range(len(items)):
@@ -117,13 +119,13 @@ class JellyfinScraper(Scraper):
             season_id = self.http_client.get(
                 self.base_url + f"/Shows/{metadata.id}/Seasons?isSpecialSeason=false",
                 headers = self.new_headers,
-                include_default_headers = False,
+                include_default_headers = False
             ).json()["Items"][episode.season - 1]["Id"]
 
             itemId = self.http_client.get(
                 self.base_url + f"/Shows/{metadata.id}/Episodes?seasonId={season_id}",
                 headers = self.new_headers,
-                include_default_headers = False,
+                include_default_headers = False
             ).json()["Items"][episode.episode - 1]["Id"]
 
             url = f"{self.base_url}/Items/{itemId}/Download?api_key={self.api_key}"

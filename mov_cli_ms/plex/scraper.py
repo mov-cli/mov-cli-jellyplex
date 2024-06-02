@@ -41,9 +41,9 @@ class PlexScraper(Scraper):
     ) -> None:
         env_config = config.get_env_config()
 
-        self.base_url = env_config("PLEX_SERVER_ID", default=None, cast=str)
-        self.username = env_config("PLEX_USERNAME", default=None, cast=str)
-        self.password = env_config("PLEX_PASSWORD", default=None, cast=str)
+        self.base_url = env_config("PLEX_SERVER_ID", default = None, cast = str)
+        self.username = env_config("PLEX_USERNAME", default = None, cast = str)
+        self.password = env_config("PLEX_PASSWORD", default = None, cast = str)
 
         self.plex = self.__auth()
 
@@ -60,7 +60,7 @@ class PlexScraper(Scraper):
                 yield PlexMetadata(
                     id = _,
                     title = video.title,
-                    type= MetadataType.SINGLE if "movie" == video.TYPE else MetadataType.MULTI,
+                    type = MetadataType.SINGLE if "movie" == video.TYPE else MetadataType.MULTI,
                     year = video.year,
                     video = video
                 )
@@ -78,20 +78,20 @@ class PlexScraper(Scraper):
     def scrape(self, metadata: PlexMetadata, episode: EpisodeSelector) -> Single | Multi:
         if metadata.type == MetadataType.MULTI:
             epi = metadata.video.episode(
-                season = episode.season, 
+                season = episode.season,
                 episode = episode.episode
             )
 
             return Multi(
-                url = self.__make_url(epi), 
-                title = metadata.title, 
+                url = self.__make_url(epi),
+                title = metadata.title,
                 episode = episode
             )
 
         return Single(
             url = self.__make_url(metadata.video),
             title = metadata.title,
-            year = metadata.year,
+            year = metadata.year
         )
 
     def __make_url(self, item) -> str:
