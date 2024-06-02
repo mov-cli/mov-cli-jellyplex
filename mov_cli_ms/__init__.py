@@ -8,13 +8,13 @@ from .jellyfin.scraper import *
 from .plex.scraper import *
 
 plugin: PluginHookData = {
-    "version": 1, # plugin hook version
-    "package_name": "mov-cli-ms", # pypi package name
+    "version": 1,  # plugin hook version
+    "package_name": "mov-cli-ms",  # pypi package name
     "scrapers": {
-        "DEFAULT": JellyfinScraper, 
+        "DEFAULT": JellyfinScraper,
         "jellyfin": JellyfinScraper,
         "plex": PlexScraper
-    }
+    },
 }
 
 __version__ = "1.1.0a1"
