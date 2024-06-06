@@ -12,9 +12,16 @@
 Here's how to install and add the plugin to mov-cli.
 
 1. Install it.
+### PIP
 ```sh
 pip install mov-cli-ms
 ```
+
+### Arch
+```sh
+yay -S python-mov-cli-ms
+```
+
 2. Then add the plugin to your mov-cli config.
 ```sh
 mov-cli -e
