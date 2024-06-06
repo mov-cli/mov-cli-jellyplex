@@ -17,7 +17,7 @@ Here's how to install and add the plugin to mov-cli.
 pip install mov-cli-ms
 ```
 
-### Arch
+### AUR
 ```sh
 yay -S python-mov-cli-ms
 ```
