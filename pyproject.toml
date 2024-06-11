@@ -1,5 +1,5 @@
 [project]
-name = "mov-cli-ms"
+name = "mov-cli-jellyplex"
 description = "A mov-cli v4 plugin for watching content from your media server."
 authors = [
     {name = "Ananas", email = "ananas@ananas.moe"}
@@ -9,7 +9,9 @@ requires-python = ">=3.8"
 license = { file = "LICENSE" }
 keywords = [
     "mov-cli",
-    "amazing plugin" # example
+
+    "jellyfin cli",
+    "plex cli",
 ]
 classifiers = [
     'Operating System :: Microsoft :: Windows :: Windows 11',
@@ -38,15 +40,15 @@ dev = [
 ]
 
 [project.urls]
-GitHub = "https://github.com/mov-cli/mov-cli-media-server"
-BugTracker = "https://github.com/mov-cli/mov-cli-media-server/issues"
+GitHub = "https://github.com/mov-cli/mov-cli-jellyplex"
+BugTracker = "https://github.com/mov-cli/mov-cli-jellyplex/issues"
 
 [tool.setuptools.dynamic]
-version = { attr = "mov_cli_ms.__version__" }
+version = { attr = "mov_cli_jellyplex.__version__" }
 
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-include = ["mov_cli_ms*"]
+include = ["mov_cli_jellyplex*"]

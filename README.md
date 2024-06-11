@@ -1,7 +1,7 @@
 <div align="center">
 
-  # mov-cli-ms
-  <sub>A mov-cli v4 plugin for watching content from your media server.</sub>
+  # 🪼📺 mov-cli-jellyplex 
+  <sub>A mov-cli v4 plugin for watching content from a media server hosting jellyfin or plex.</sub>
 
 </div>
 
@@ -33,5 +33,5 @@ ms = "mov-cli-ms"
 
 ## Usage 🖱️
 ```sh
-mov-cli -s ms {query} -- --url "jellyfin url" --username "your jellyfin username" --password "your jellyfin password"
+mov-cli -s jellyplex {query}
 ```
