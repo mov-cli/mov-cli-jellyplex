@@ -32,6 +32,18 @@ ms = "mov-cli-ms"
 ```
 
 ## Usage 🖱️
+1. Set your environment variables
+
+> See this [page](https://github.com/mov-cli/mov-cli/wiki/Configuration#environment-variables) on how to edit them.
+
+These environment variables should be set:
+```env
+JELLY_URL = "http://ip/"
+JELLY_USERNAME = "example"
+JELLY_PASSWORD = "example"
+```
+
+2. Usage
 ```sh
 mov-cli -s jellyplex {query}
 ```
