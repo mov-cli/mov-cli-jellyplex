@@ -14,12 +14,12 @@ Here's how to install and add the plugin to mov-cli.
 1. Install it.
 ### PIP
 ```sh
-pip install mov-cli-ms
+pip install mov-cli-jellyplex
 ```
 
 ### AUR
 ```sh
-yay -S python-mov-cli-ms
+yay -S python-mov-cli-jellyplex
 ```
 
 2. Then add the plugin to your mov-cli config.
@@ -28,7 +28,7 @@ mov-cli -e
 ```
 ```toml
 [mov-cli.plugins]
-ms = "mov-cli-ms"
+ms = "mov-cli-jellyplex"
 ```
 
 ## Usage 🖱️
