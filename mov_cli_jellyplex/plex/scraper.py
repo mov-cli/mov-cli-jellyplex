@@ -49,7 +49,9 @@ class PlexScraper(Scraper):
 
         super().__init__(config, http_client, options)
 
-    def search(self, query: str, limit: int = 20) -> Generator[PlexMetadata, Any, None]:
+    def search(self, query: str, limit: Optional[int]) -> Generator[PlexMetadata, Any, None]:
+        limit = 20 if limit is None else limit
+
         if query in ["all+", "*"]:
             videos = self.plex.library.all()
         else:
@@ -61,6 +63,7 @@ class PlexScraper(Scraper):
                     id = _,
                     title = video.title,
                     type = MetadataType.SINGLE if "movie" == video.TYPE else MetadataType.MULTI,
+                    image_url = video.posterUrl,
                     year = video.year,
                     video = video
                 )

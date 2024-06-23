@@ -159,7 +159,7 @@ class JellyfinScraper(Scraper):
         )
 
         if authbyname.is_error:
-            raise InvalidLogin(self.username)
+            raise ConnectionError(f"Login failed for user: {self.username}")
 
         r = authbyname.json()
 
@@ -171,11 +171,3 @@ class JellyfinScraper(Scraper):
         self.cache.set_cache("jellyfin_login", cached)
 
         return headers, user_id, token
-
-class InvalidLogin(MovCliException):
-    """Raises when the jellyfin scraper fails while auth with server."""
-
-    def __init__(self, user: str) -> None:
-        super().__init__(
-            f"Invalid Login for user: {user}",
-        )
