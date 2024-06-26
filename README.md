@@ -37,11 +37,19 @@ ms = "mov-cli-jellyplex"
 > See this [page](https://github.com/mov-cli/mov-cli/wiki/Configuration#environment-variables) on how to edit them.
 
 These environment variables should be set:
-```env
-JELLY_URL = "http://ip/"
-JELLY_USERNAME = "example"
-JELLY_PASSWORD = "example"
-```
+- Jellyfin
+  ```env
+  JELLY_URL = "http://ip/"
+  JELLY_USERNAME = "example"
+  JELLY_PASSWORD = "example"
+  ```
+
+- Plex
+  ```env
+  PLEX_SERVER_ID="example"
+  PLEX_USERNAME="example"
+  PLEX_PASSWORD="example"
+  ```
 
 2. Usage
 ```sh
