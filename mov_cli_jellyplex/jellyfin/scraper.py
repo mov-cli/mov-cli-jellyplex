@@ -11,7 +11,6 @@ if TYPE_CHECKING:
 from platform import uname
 
 from mov_cli.scraper import Scraper
-from mov_cli.errors import MovCliException
 from mov_cli.utils import EpisodeSelector, what_platform
 from mov_cli import Single, Multi, Metadata, MetadataType, Cache
 
