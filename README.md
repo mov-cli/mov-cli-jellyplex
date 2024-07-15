@@ -5,9 +5,6 @@
 
 </div>
 
-> [!NOTE]
-> WIP, Currently only Jellyfin works
-
 ## Installation 🛠️
 Here's how to install and add the plugin to mov-cli.
 
