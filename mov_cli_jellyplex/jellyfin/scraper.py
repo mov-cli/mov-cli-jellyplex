@@ -29,9 +29,9 @@ class JellyfinScraper(Scraper):
             what_platform()
         )
 
-        self.base_url = env_config("JELLY_URL", default = None, cast = str)
-        self.username = env_config("JELLY_USERNAME", default = None, cast = str)
-        self.password = env_config("JELLY_PASSWORD", default = None, cast = str)
+        self.base_url = env_config("JELLY_URL", default = None)
+        self.username = env_config("JELLY_USERNAME", default = None)
+        self.password = env_config("JELLY_PASSWORD", default = None)
 
         self.uuid = uname().node  # NOTE: To prevent of multiple device detections
 

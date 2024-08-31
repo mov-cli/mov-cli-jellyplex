@@ -19,6 +19,7 @@ from plexapi.myplex import MyPlexAccount
 from plexapi.server import PlexServer
 from plexapi.exceptions import TwoFactorRequired
 from plexapi.video import Movie, Show
+from plexapi.exceptions import Unauthorized
 
 __all__ = (
     "PlexScraper",
@@ -41,21 +42,23 @@ class PlexScraper(Scraper):
     ) -> None:
         env_config = config.get_env_config()
 
-        self.base_url = env_config("PLEX_SERVER_ID", default = None, cast = str)
-        self.username = env_config("PLEX_USERNAME", default = None, cast = str)
-        self.password = env_config("PLEX_PASSWORD", default = None, cast = str)
+        self.base_url = env_config("PLEX_SERVER_ID", default = None)
+        self.username = env_config("PLEX_USERNAME", default = None)
+        self.password = env_config("PLEX_PASSWORD", default = None)
 
-        self.plex = self.__auth()
+        self.__authenticated_plex_server: Optional[PlexServer] = None
 
         super().__init__(config, http_client, options)
 
     def search(self, query: str, limit: Optional[int]) -> Generator[PlexMetadata, Any, None]:
         limit = 20 if limit is None else limit
 
+        plex_server = self.__get_plex_server()
+
         if query in ["all+", "*"]:
-            videos = self.plex.library.all()
+            videos = plex_server.library.all()
         else:
-            videos = self.plex.search(query, limit=limit)
+            videos = plex_server.search(query, limit=limit)
 
         for _, video in enumerate(videos):
             if video.TYPE in ["movie", "show"]:
@@ -98,19 +101,41 @@ class PlexScraper(Scraper):
         )
 
     def __make_url(self, item) -> str:
+        plex_server = self.__get_plex_server()
+
         key = next(item.iterParts()).key
 
         return item._server.url(
-            f"{key}?download=1&X-Plex-Token={self.plex.account().authToken}"
+            f"{key}?download=1&X-Plex-Token={plex_server.account().authToken}"
         )
 
-    def __auth(self) -> PlexServer:
-        try:
-            account = MyPlexAccount(self.username, self.password)
-        except TwoFactorRequired:
-            code = self.options.get("2FA")
-            account = MyPlexAccount(self.username, self.password, code=code)
+    def __get_plex_server(self) -> PlexServer:
 
-        plex = account.resource(self.base_url).connect()
+        if self.__authenticated_plex_server is None:
 
-        return plex
+            if self.base_url is None:
+                raise Exception("You haven't set the 'PLEX_SERVER_ID' env!")
+
+            if self.username is None:
+                raise Exception("You haven't set the 'PLEX_USERNAME' env!")
+
+            if self.password is None:
+                raise Exception("You haven't set the 'PLEX_PASSWORD' env!")
+
+            try:
+                account = MyPlexAccount(self.username, self.password)
+
+            except TwoFactorRequired:
+                code = self.options.get("2FA")
+                account = MyPlexAccount(self.username, self.password, code=code)
+
+            except Unauthorized as e:
+                raise Exception(
+                    f"Failed to authenticate plex credentials! Error: {e}"
+                )
+
+            plex = account.resource(self.base_url).connect()
+
+            self.__authenticated_plex_server = plex
+
+        return self.__authenticated_plex_server
