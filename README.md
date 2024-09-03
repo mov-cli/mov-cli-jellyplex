@@ -50,5 +50,5 @@ These environment variables should be set:
 
 2. Usage
 ```sh
-mov-cli -s jellyplex {query}
+mov-cli -s jelly {query}
 ```
