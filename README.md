@@ -25,7 +25,7 @@ mov-cli -e
 ```
 ```toml
 [mov-cli.plugins]
-ms = "mov-cli-jellyplex"
+jelly = "mov-cli-jellyplex"
 ```
 
 ## Usage 🖱️
