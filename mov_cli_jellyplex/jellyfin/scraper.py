@@ -130,6 +130,15 @@ class JellyfinScraper(Scraper):
         )
 
     def __get_auth(self):
+        if self.base_url is None:
+            raise Exception("You haven't set the 'JELLY_URL' env!")
+
+        if self.username is None:
+            raise Exception("You haven't set the 'JELLY_USERNAME' env!")
+
+        if self.password is None:
+            raise Exception("You haven't set the 'JELLY_PASSWORD' env!")
+
         cached: Optional[dict] = self.cache.get_cache("jellyfin_login")
 
         if cached is not None:   
