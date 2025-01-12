@@ -49,6 +49,23 @@ These environment variables should be set:
   ```
 
 2. Usage
+
+**Jellyfin**:
 ```sh
 mov-cli -s jelly {query}
 ```
+
+**Plex**:
+```sh
+mov-cli -s jelly.plex {query}
+```
+
+> [!NOTE]
+> You can also override the jelly namespace to only use `jelly` instead of `jelly.plex`:
+> ```toml
+> [mov-cli.scrapers]
+> jelly = "jellyplex.plex"
+>
+> [mov-cli.plugins]
+> jellyplex = "mov-cli-jellyplex"
+>```
