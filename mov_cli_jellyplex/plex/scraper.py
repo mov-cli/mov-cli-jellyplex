@@ -60,11 +60,11 @@ class PlexScraper(Scraper):
         else:
             videos = plex_server.search(query, limit=limit)
 
-        for _, video in enumerate(videos):
+        for id, video in enumerate(videos):
             if video.TYPE in ["movie", "show"]:
                 yield PlexMetadata(
-                    id = _,
-                    title = video.title,
+                    id = id,
+                    title = video.title + f" ({video.librarySectionTitle})",
                     type = MetadataType.SINGLE if "movie" == video.TYPE else MetadataType.MULTI,
                     image_url = video.posterUrl,
                     year = video.year,
